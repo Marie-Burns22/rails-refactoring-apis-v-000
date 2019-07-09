@@ -1,12 +1,13 @@
 class RepositoriesController < ApplicationController
   def index
     github = GithubService.new
-    @repos_array = github.get_repos(session[:token])
+    @repos_array = github.get_repos
+    session[:username] = github.get_username
   end
 
   def create
-    github = GithubService.new()
-    github.create_repo(params, token)
+    github = GithubService.new
+    github.create_repo(params[:name])
     redirect_to '/'
   end
 end
